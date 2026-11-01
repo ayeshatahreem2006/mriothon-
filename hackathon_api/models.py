@@ -24,3 +24,21 @@ class Manual(models.Model):
 
     def __str__(self):
         return f"{self.title} - {self.revision}"
+class Passage(models.Model):
+    machine = models.ForeignKey(
+        Machine,
+        on_delete=models.CASCADE,
+        related_name="passages"
+    )
+
+    manual_name = models.CharField(max_length=255)
+    revision = models.CharField(max_length=50)
+    page_number = models.PositiveIntegerField()
+    text = models.TextField()
+
+    embedding = models.JSONField(null=True, blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.manual_name} - Page {self.page_number}"
